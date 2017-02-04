@@ -48,6 +48,7 @@ func main() {
 
 	ansiContSeqReg := regexp.MustCompilePOSIX(`(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~]`)
 	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Split(ScanLines)
 	for scanner.Scan() {
 		text := scanner.Text()
 		if fileViewFlag {

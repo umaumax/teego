@@ -16,7 +16,9 @@ $ ccat -C=always main.c | teego tmp.txt
 ## TODO
 * flagで通常のteeのようにもなるように?
 * 次の問題 ErrTooLong         = errors.New("bufio.Scanner: token too long")
+	* 連続して"\r"となった場合のみは分割して取得(根本的解決はしていない)
 * stdinからstdoutとstderrはどうやって取得?!
+* test caseの追加
 * 下のtee manを参考に
 
 ## FYI
