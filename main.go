@@ -52,10 +52,10 @@ func main() {
 	for scanner.Scan() {
 		text := scanner.Text()
 		if fileViewFlag {
-			fmt.Fprintln(fp, text)
+			fmt.Fprint(fp, text)
 		}
 		if stdViewFlag {
-			fmt.Fprintln(os.Stdout, text)
+			fmt.Fprint(os.Stdout, text)
 		}
 
 		if fileViewFlag && stdViewFlag {
@@ -70,10 +70,10 @@ func main() {
 		text = ansiContSeqReg.ReplaceAllString(text, "")
 
 		if !fileViewFlag {
-			fmt.Fprintln(fp, text)
+			fmt.Fprint(fp, text)
 		}
 		if !stdViewFlag {
-			fmt.Fprintln(os.Stdout, text)
+			fmt.Fprint(os.Stdout, text)
 		}
 	}
 	if err := scanner.Err(); err != nil {

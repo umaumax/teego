@@ -13,17 +13,26 @@ func dropCR(data []byte) []byte {
 	return data
 }
 
+func convCRToCN(data []byte) []byte {
+	if len(data) > 1 && data[len(data)-2] == '\r' {
+		data[len(data)-2] = '\n'
+		data = data[:len(data)-1]
+	}
+	return data
+}
+
 func ScanLines(data []byte, atEOF bool) (advance int, token []byte, err error) {
 	if atEOF && len(data) == 0 {
 		return 0, nil, nil
 	}
 	if i := bytes.IndexByte(data, '\n'); i >= 0 {
 		// We have a full newline-terminated line.
-		return i + 1, dropCR(data[0:i]), nil
+		return i + 1, convCRToCN(data[0 : i+1]), nil
 	}
 	if i := bytes.IndexByte(data, '\r'); i >= 0 {
 		// We have a full newline-terminated line.
-		return i + 1, dropCR(data[0:i]), nil
+		//return i + 1, dropCR(data[0:i]), nil
+		return i + 1, data[0:i], nil
 	}
 	// If we're at EOF, we have a final, non-terminated line. Return it.
 	if atEOF {
