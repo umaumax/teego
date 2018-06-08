@@ -17,9 +17,9 @@ var (
 )
 
 func init() {
-	flag.BoolVar(&fileViewFlag, "file", false, "file view output flag")
-	flag.BoolVar(&stdViewFlag, "std", true, "stdout & stderr view output flag")
-	flag.BoolVar(&appendFlag, "b", false, "Append the output to the files rather than overwriting them.")
+	flag.BoolVar(&fileViewFlag, "file-ansi", false, "file output ansi flag")
+	flag.BoolVar(&stdViewFlag, "pipe-ansi", true, "pipe output ansi flag")
+	flag.BoolVar(&appendFlag, "a", false, "Append the output to the files rather than overwriting them.")
 	//	TODO
 	// -i      Ignore the SIGINT signal.
 }
@@ -48,32 +48,26 @@ func main() {
 
 	ansiContSeqReg := regexp.MustCompilePOSIX(`(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~]`)
 	scanner := bufio.NewScanner(os.Stdin)
-	scanner.Split(ScanLines)
 	for scanner.Scan() {
 		text := scanner.Text()
 		if fileViewFlag {
-			fmt.Fprint(fp, text)
+			fmt.Fprintln(fp, text)
 		}
 		if stdViewFlag {
-			fmt.Fprint(os.Stdout, text)
+			fmt.Fprintln(os.Stdout, text)
 		}
 
 		if fileViewFlag && stdViewFlag {
 			continue
 		}
 
-		//	remove "\r"
-		index := strings.LastIndex(text, "\r")
-		index += len("\r")
-		text = text[index:]
-		//	remove "ansiContSeqReg control sequences"
 		text = ansiContSeqReg.ReplaceAllString(text, "")
 
 		if !fileViewFlag {
-			fmt.Fprint(fp, text)
+			fmt.Fprintln(fp, text)
 		}
 		if !stdViewFlag {
-			fmt.Fprint(os.Stdout, text)
+			fmt.Fprintln(os.Stdout, text)
 		}
 	}
 	if err := scanner.Err(); err != nil {

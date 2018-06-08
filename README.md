@@ -2,24 +2,21 @@
 
 golang tee
 
-You can shoose ignore ANSI Control Sequences or not ignore.
+You can shoose ignore ANSI Control Sequences or not.
 
 ## example
 ```
 $ cat main.c | grep --color=always func | teego tmp.txt
 $ ls --color=always | teego tmp.txt
 $ ccat -C=always main.c | teego tmp.txt
+
 # stdout & stderr -> color
 # file -> no color
 ```
 
 ## TODO
-* flagで通常のteeのようにもなるように?
-* 次の問題 ErrTooLong         = errors.New("bufio.Scanner: token too long")
-	* 連続して"\r"となった場合のみは分割して取得(根本的解決はしていない)
-* stdinからstdoutとstderrはどうやって取得?!
-* test caseの追加
-* 下のtee manを参考に
+* flagで通常のteeのような挙動に
+* solve `ErrTooLong = errors.New("bufio.Scanner: token too long")`
 
 ## FYI
 [How can I remove the ANSI escape sequences from a string in python - Stack Overflow]( http://stackoverflow.com/questions/14693701/how-can-i-remove-the-ansi-escape-sequences-from-a-string-in-python )
