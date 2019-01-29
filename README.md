@@ -4,19 +4,19 @@ golang tee
 
 You can choose ignore ANSI Control Sequences or not.
 
-## example
+## how to use this tool
+* stdout & stderr -> color
+* file output -> no color
 ```
 $ cat main.c | grep --color=always func | teego tmp.txt
 $ ls --color=always | teego tmp.txt
 $ ccat -C=always main.c | teego tmp.txt
-
-# stdout & stderr -> color
-# file -> no color
 ```
 
 ## TODO
 * flagで通常のteeのような挙動に
 * solve `ErrTooLong = errors.New("bufio.Scanner: token too long")`
+  * see: [Goのbufio\.Scannerは入力データの1行の長さが一定以上になるとスキャンをやめてしまう \- ぬいぐるみライフ？]( https://mickey24.hatenablog.com/entry/bufio_scanner_line_length )
 
 ## FYI
 [How can I remove the ANSI escape sequences from a string in python - Stack Overflow]( http://stackoverflow.com/questions/14693701/how-can-i-remove-the-ansi-escape-sequences-from-a-string-in-python )
