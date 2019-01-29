@@ -2,7 +2,7 @@
 
 golang tee
 
-You can shoose ignore ANSI Control Sequences or not.
+You can choose ignore ANSI Control Sequences or not.
 
 ## example
 ```
